@@ -1,0 +1,18 @@
+
+# Tile menu items definition
+entity.tile.collection:
+  title: 'Tile list'
+  route_name: entity.tile.collection
+  description: 'List Tile entities'
+  parent: system.admin_structure
+  weight: 100
+
+
+# Tile type menu items definition
+entity.tile_type.collection:
+  title: 'Tile type'
+  route_name: entity.tile_type.collection
+  description: 'List Tile type (bundles)'
+  parent: system.admin_structure
+  weight: 99
+

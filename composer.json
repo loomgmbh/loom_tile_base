@@ -1,0 +1,14 @@
+{
+  "name": "drupal/loom_tile_base",
+  "type": "drupal-module",
+  "description": "LOOM Tile base module",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/loom_tile_base",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/loom_tile_base",
+    "source": "http://cgit.drupalcode.org/loom_tile_base"
+  },
+  "require": { }
+}

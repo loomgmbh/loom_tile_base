@@ -1,0 +1,5 @@
+name: 'LOOM Tile Base'
+type: module
+description: 'LOOM Tile base module'
+core: 8.x
+package: 'LOOM'

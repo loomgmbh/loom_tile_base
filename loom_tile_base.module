@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * @file
+ * Contains loom_tile_base.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function loom_tile_base_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the loom_tile_base module.
+    case 'help.page.loom_tile_base':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('LOOM Tile base module') . '</p>';
+      return $output;
+
+    default:
+      return '';
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function loom_tile_base_theme() {
+  $theme = [];
+  $theme['tile'] = [
+    'render element' => 'elements',
+    'file' => 'tile.page.inc',
+    'template' => 'tile',
+  ];
+  $theme['tile_content_add_list'] = [
+    'render element' => 'content',
+    'variables' => ['content' => NULL],
+    'file' => 'tile.page.inc',
+  ];
+  return $theme;
+}
+
+/**
+* Implements hook_theme_suggestions_HOOK().
+*/
+function loom_tile_base_theme_suggestions_tile(array $variables) {
+  $suggestions = [];
+  $entity = $variables['elements']['#tile'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'tile__' . $sanitized_view_mode;
+  $suggestions[] = 'tile__' . $entity->bundle();
+  $suggestions[] = 'tile__' . $entity->bundle() . '__' . $sanitized_view_mode;
+  $suggestions[] = 'tile__' . $entity->id();
+  $suggestions[] = 'tile__' . $entity->id() . '__' . $sanitized_view_mode;
+  return $suggestions;
+}
