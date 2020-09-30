@@ -9,6 +9,11 @@ use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
  * Implements hook_help().
+ *
+ * @param $route_name
+ * @param RouteMatchInterface $route_match
+ *
+ * @return string
  */
 function loom_tile_base_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
@@ -28,23 +33,20 @@ function loom_tile_base_help($route_name, RouteMatchInterface $route_match) {
  * Implements hook_theme().
  */
 function loom_tile_base_theme() {
-  $theme = [];
-  $theme['tile'] = [
-    'render element' => 'elements',
-    'file' => 'tile.page.inc',
-    'template' => 'tile',
+  return [
+    'tile' => [
+      'render element' => 'elements',
+      'template' => 'tile',
+    ],
+    'tile_content_add_list' => [
+      'render element' => 'content',
+      'variables' => [
+        'content' => NULL
+      ],
+    ],
   ];
-  $theme['tile_content_add_list'] = [
-    'render element' => 'content',
-    'variables' => ['content' => NULL],
-    'file' => 'tile.page.inc',
-  ];
-  return $theme;
 }
 
-/**
-* Implements hook_theme_suggestions_HOOK().
-*/
 function loom_tile_base_theme_suggestions_tile(array $variables) {
   $suggestions = [];
   $entity = $variables['elements']['#tile'];
