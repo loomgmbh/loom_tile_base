@@ -14,8 +14,6 @@ use Drupal\user\EntityOwnerInterface;
  */
 interface TileInterface extends ContentEntityInterface, RevisionLogInterface, EntityChangedInterface, EntityOwnerInterface {
 
-  // Add get/set methods for your configuration properties here.
-
   /**
    * Gets the Tile name.
    *
@@ -30,7 +28,7 @@ interface TileInterface extends ContentEntityInterface, RevisionLogInterface, En
    * @param string $name
    *   The Tile name.
    *
-   * @return \Drupal\loom_tile_base\Entity\TileInterface
+   * @return TileInterface
    *   The called Tile entity.
    */
   public function setName($name);
@@ -49,7 +47,7 @@ interface TileInterface extends ContentEntityInterface, RevisionLogInterface, En
    * @param int $timestamp
    *   The Tile creation timestamp.
    *
-   * @return \Drupal\loom_tile_base\Entity\TileInterface
+   * @return TileInterface
    *   The called Tile entity.
    */
   public function setCreatedTime($timestamp);
@@ -70,7 +68,7 @@ interface TileInterface extends ContentEntityInterface, RevisionLogInterface, En
    * @param bool $published
    *   TRUE to set this Tile to published, FALSE to set it to unpublished.
    *
-   * @return \Drupal\loom_tile_base\Entity\TileInterface
+   * @return TileInterface
    *   The called Tile entity.
    */
   public function setPublished($published);
@@ -89,7 +87,7 @@ interface TileInterface extends ContentEntityInterface, RevisionLogInterface, En
    * @param int $timestamp
    *   The UNIX timestamp of when this revision was created.
    *
-   * @return \Drupal\loom_tile_base\Entity\TileInterface
+   * @return TileInterface
    *   The called Tile entity.
    */
   public function setRevisionCreationTime($timestamp);
@@ -108,9 +106,21 @@ interface TileInterface extends ContentEntityInterface, RevisionLogInterface, En
    * @param int $uid
    *   The user ID of the revision author.
    *
-   * @return \Drupal\loom_tile_base\Entity\TileInterface
+   * @return TileInterface
    *   The called Tile entity.
    */
   public function setRevisionUserId($uid);
+
+  // additional methods
+
+  /**
+   * @return TileTypeInterface
+   */
+  public function getBundleType();
+
+  /**
+   * @return string
+   */
+  public function bundleName();
 
 }

@@ -2,6 +2,7 @@
 
 namespace Drupal\loom_tile_base\Form;
 
+use Drupal;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
 
@@ -16,26 +17,23 @@ class TileTypeForm extends EntityForm {
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
 
-    $tile_type = $this->entity;
     $form['label'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Label'),
       '#maxlength' => 255,
-      '#default_value' => $tile_type->label(),
+      '#default_value' => $this->entity->label(),
       '#description' => $this->t("Label for the Tile type."),
       '#required' => TRUE,
     ];
 
     $form['id'] = [
       '#type' => 'machine_name',
-      '#default_value' => $tile_type->id(),
+      '#default_value' => $this->entity->id(),
       '#machine_name' => [
         'exists' => '\Drupal\loom_tile_base\Entity\TileType::load',
       ],
-      '#disabled' => !$tile_type->isNew(),
+      '#disabled' => !$this->entity->isNew(),
     ];
-
-    /* You will need additional form elements for your custom properties. */
 
     return $form;
   }
@@ -44,22 +42,21 @@ class TileTypeForm extends EntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-    $tile_type = $this->entity;
-    $status = $tile_type->save();
+    $status = $this->entity->save();
 
     switch ($status) {
       case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label Tile type.', [
-          '%label' => $tile_type->label(),
+        Drupal::messenger()->addStatus($this->t('Created the %label Tile type.', [
+          '%label' => $this->entity->label(),
         ]));
         break;
 
       default:
-        drupal_set_message($this->t('Saved the %label Tile type.', [
-          '%label' => $tile_type->label(),
+        Drupal::messenger()->addStatus($this->t('Saved the %label Tile type.', [
+          '%label' => $this->entity->label(),
         ]));
     }
-    $form_state->setRedirectUrl($tile_type->toUrl('collection'));
+    $form_state->setRedirectUrl($this->entity->toUrl('collection'));
   }
 
 }

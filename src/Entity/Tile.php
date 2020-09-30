@@ -2,10 +2,10 @@
 
 namespace Drupal\loom_tile_base\Entity;
 
+use Drupal;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\RevisionableContentEntityBase;
-use Drupal\Core\Entity\RevisionableInterface;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\user\UserInterface;
@@ -80,7 +80,7 @@ class Tile extends RevisionableContentEntityBase implements TileInterface {
   public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
     parent::preCreate($storage_controller, $values);
     $values += [
-      'user_id' => \Drupal::currentUser()->id(),
+      'user_id' => Drupal::currentUser()->id(),
     ];
   }
 
@@ -90,10 +90,9 @@ class Tile extends RevisionableContentEntityBase implements TileInterface {
   protected function urlRouteParameters($rel) {
     $uri_route_parameters = parent::urlRouteParameters($rel);
 
-    if ($rel === 'revision_revert' && $this instanceof RevisionableInterface) {
+    if ($rel === 'revision_revert') {
       $uri_route_parameters[$this->getEntityTypeId() . '_revision'] = $this->getRevisionId();
-    }
-    elseif ($rel === 'revision_delete' && $this instanceof RevisionableInterface) {
+    } else if ($rel === 'revision_delete') {
       $uri_route_parameters[$this->getEntityTypeId() . '_revision'] = $this->getRevisionId();
     }
 
@@ -276,6 +275,14 @@ class Tile extends RevisionableContentEntityBase implements TileInterface {
       ->setTranslatable(TRUE);
 
     return $fields;
+  }
+
+  public function getBundleType() {
+    return $this->entityTypeManager()->getStorage($this->getEntityType()->getBundleEntityType())->load($this->bundle());
+  }
+
+  public function bundleName() {
+    return $this->getBundleType()->label();
   }
 
 }

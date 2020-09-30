@@ -1,0 +1,4 @@
+services:
+  plugin.manager.tile:
+    class: Drupal\loom_tile_base\Plugin\TilePluginManager
+    parent: default_plugin_manager
